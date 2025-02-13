@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -45,5 +47,23 @@ public class AnimalRepository {
             result.add(a);
         }
         return result;
+    }
+
+    public List<AnimalData> find(String name,String picture,String location) throws IOException{
+        List<AnimalData> animalsData=findAll();
+        List<AnimalData> filteredList=new ArrayList<>();
+
+        if (name==null||picture==null||location==null){
+            return Collections.emptyList();
+        }
+        for (AnimalData animal : animalsData) {
+            if (animal.getName().equalsIgnoreCase(name) &&
+                    animal.getPicture().equalsIgnoreCase(picture) &&
+                    animal.getLocation().equalsIgnoreCase(location)) {
+                filteredList.add(animal);
+            }
+        }
+        return filteredList;
+
     }
 }
